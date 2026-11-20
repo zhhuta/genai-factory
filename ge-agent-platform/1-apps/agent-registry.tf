@@ -15,8 +15,8 @@
 # Set custom service endpoints in Agent Registry
 module "agent_registry" {
   # TODO: move to the first Cloud Foundation Fabric release tag that
-  # includes modules/agent-registry (GoogleCloudPlatform/cloud-foundation-fabric#4434).
-  source          = "github.com/zhhuta/cloud-foundation-fabric//modules/agent-registry?ref=aab85dd548b32268e815408e6b0f45e7ab7593e5"
+  # includes modules/geap-agent-registry (GoogleCloudPlatform/cloud-foundation-fabric#4434).
+  source          = "github.com/zhhuta/cloud-foundation-fabric//modules/geap-agent-registry?ref=22ad5bc46e4c68640521434d9cffb9f641e4654e"
   project_id      = var.project_id
   location        = var.region
   deletion_policy = var.enable_deletion_protection ? "PREVENT" : "ABANDON"
