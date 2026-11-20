@@ -14,7 +14,7 @@
 # limitations under the License.
 
 values:
-  google_agent_registry_service.agent_registry_services["test-agent"]:
+  module.agent_registry.google_agent_registry_service.default["test-agent"]:
     agent_spec:
       - content: '{}'
         type: A2A_AGENT_CARD
@@ -28,7 +28,7 @@ values:
     project: test-gf-geap-0
     service_id: test-agent
     timeouts:
-  google_agent_registry_service.agent_registry_services["test-endpoint"]:
+  module.agent_registry.google_agent_registry_service.default["test-endpoint"]:
     agent_spec: []
     deletion_policy: PREVENT
     description:
@@ -43,7 +43,7 @@ values:
     project: test-gf-geap-0
     service_id: test-endpoint
     timeouts:
-  google_agent_registry_service.agent_registry_services["test-mcp"]:
+  module.agent_registry.google_agent_registry_service.default["test-mcp"]:
     agent_spec: []
     deletion_policy: PREVENT
     description:
@@ -266,7 +266,7 @@ counts:
   google_network_services_agent_connectivity_template: 1
   google_network_services_agent_gateway: 1
   google_network_services_authz_extension: 1
-  modules: 1
+  modules: 2
   resources: 10
 
 outputs:

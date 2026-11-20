@@ -13,43 +13,17 @@
 # limitations under the License.
 
 # Set custom service endpoints in Agent Registry
-resource "google_agent_registry_service" "agent_registry_services" {
-  for_each        = local.agent_registry_services
-  project         = var.project_id
-  location        = each.value.location
-  service_id      = each.key
-  display_name    = each.value.display_name
-  description     = each.value.description
+module "agent_registry" {
+  # TODO: move to the first Cloud Foundation Fabric release tag that
+  # includes modules/agent-registry (GoogleCloudPlatform/cloud-foundation-fabric#4434).
+  source          = "github.com/zhhuta/cloud-foundation-fabric//modules/agent-registry?ref=aab85dd548b32268e815408e6b0f45e7ab7593e5"
+  project_id      = var.project_id
+  location        = var.region
   deletion_policy = var.enable_deletion_protection ? "PREVENT" : "ABANDON"
+  services        = local.agent_registry_services
+}
 
-  dynamic "interfaces" {
-    for_each = each.value.spec_type == "A2A_AGENT_CARD" ? [] : [""]
-    content {
-      url              = each.value.url
-      protocol_binding = each.value.protocol
-    }
-  }
-
-  dynamic "agent_spec" {
-    for_each = each.value.type == "agent" ? [""] : []
-    content {
-      type    = each.value.spec_type
-      content = each.value.content
-    }
-  }
-
-  dynamic "endpoint_spec" {
-    for_each = each.value.type == "endpoint" ? [""] : []
-    content {
-      type = each.value.spec_type
-    }
-  }
-
-  dynamic "mcp_server_spec" {
-    for_each = each.value.type == "mcp_server" ? [""] : []
-    content {
-      type    = each.value.spec_type
-      content = each.value.content
-    }
-  }
+moved {
+  from = google_agent_registry_service.agent_registry_services
+  to   = module.agent_registry.google_agent_registry_service.default
 }

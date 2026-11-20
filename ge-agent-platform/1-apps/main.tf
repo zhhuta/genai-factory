@@ -82,9 +82,8 @@ locals {
   }
 
   _svc_registry_ids = {
-    for k, v in var.agent_registry_services : k => basename(
-      google_agent_registry_service.agent_registry_services[k].registry_resource
-    )
+    for k, v in var.agent_registry_services :
+    k => module.agent_registry.registry_resource_ids[k]
   }
 
   # Merge stage-level access_policies with service-level access_policy_rules,
